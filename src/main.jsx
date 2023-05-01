@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,6 +14,9 @@ import Inventory from './components/Inventory/Inventory';
 import Login from './components/Login/Login';
 import cartProductsLoader from './loaders/cartProductsLoader';
 import Checkout from './components/Checkout/Checkout';
+import Sigup from './components/Sigup/Sigup';
+import ContextProvider from './components/ContextProvider/ContextProvider';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'orders',
-        element: <Orders></Orders>,
+        element: <PrivateRoute><Orders></Orders></PrivateRoute> ,
         loader: cartProductsLoader
       },
       {
@@ -39,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login></Login>
+      },
+      {
+        path: '/signup',
+        element: <Sigup></Sigup>
       }
     ]
   }
@@ -46,6 +54,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider><RouterProvider router={router} /></ContextProvider>
   </React.StrictMode>,
 )
